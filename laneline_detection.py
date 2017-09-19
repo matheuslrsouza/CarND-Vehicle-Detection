@@ -333,7 +333,7 @@ def detect_lines(image, left_line, right_line):
     ])
 
     # increase the size of line (mask area)
-    increase_value = 350
+    increase_value = 150
     x_left = x_bl + increase_value
     x_right = x_br - increase_value
 
@@ -423,29 +423,13 @@ def detect_lines(image, left_line, right_line):
     pts = np.hstack((pts_left, pts_right))
 
     # Draw the lane onto the warped blank image
-    cv2.fillPoly(color_warp, np.int_([pts]), polycolor)
-    
-    ##
-    # shift to right to test
-    new_right = np.copy(right_line.bestx).astype(np.uint8) + 200
-    new_binary_img = np.zeros_like(warped_img).astype(np.uint8)
-    new_binary_img[new_right] = 1
-    
-    new_binary_warp = cv2.warpPerspective(new_binary_img, Minv, (image.shape[1], image.shape[0])) 
-    ##
+    cv2.fillPoly(color_warp, np.int_(pts), polycolor)
     
     # Warp the blank back to original image space using inverse perspective matrix (Minv)
     newwarp = cv2.warpPerspective(color_warp, Minv, (image.shape[1], image.shape[0])) 
     # Combine the result with the original image
     result = cv2.addWeighted(image, 1, newwarp, 0.3, 0)
-    
-    
-    #new things
-    '''
-    warped_color_img, _ = warp(image, src, dest)
-    result = cv2.addWeighted(warped_color_img, 1, color_warp, 0.3, 0)
-    '''
-
+   
     # print texts
 
     # curvature
@@ -468,4 +452,4 @@ def detect_lines(image, left_line, right_line):
     cv2.putText(result, text_curvature, (50,50), cv2.FONT_HERSHEY_SIMPLEX, 1.5, (255, 255, 255), 2)
     cv2.putText(result, text_distance, (50,100), cv2.FONT_HERSHEY_SIMPLEX, 1.5, (255, 255, 255), 2)
         
-    return result, left_line.bestx, right_line.bestx, ploty, new_binary_warp
+    return result
