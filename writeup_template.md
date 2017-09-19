@@ -138,6 +138,6 @@ Here's an example result showing the heatmap from a series of frames of video, t
 
 #### 1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
 
-I believe that the most critical part of my pipeline is the time it takes to process, every second of the video takes approximately 40 seconds. The next challenge I'd like to solve is to leave the process in real time.
+I believe that the most critical part of my pipeline is the time it takes to process, every second of the video takes approximately 28 seconds. The next challenge I'd like to solve is to leave the process in real time.
 
 One of the biggest problems I had was avoiding false positives and differentiating one vehicle from the other.
